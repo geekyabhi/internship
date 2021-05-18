@@ -13,8 +13,8 @@ const DataItem = ({currentUser,dataitem,temp2,settemp2}) => {
         }
         try{    
             setloading(true)
-            const {data}=await axios.delete(`http://localhost:5000/api/data/${dataitem._id}`,config)
-            // const {data}=await axios.delete(`https://pure-river-17146.herokuapp.com/api/data/${dataitem._id}`,config)
+            // const {data}=await axios.delete(`http://localhost:5000/api/data/${dataitem._id}`,config)
+            const {data}=await axios.delete(`https://pure-river-17146.herokuapp.com/api/data/${dataitem._id}`,config)
             setsuccess(data.success)
             setalert(data.message)
             setloading(false)
