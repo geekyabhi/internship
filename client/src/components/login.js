@@ -18,7 +18,8 @@ const Login = () => {
         e.preventDefault()
         try{
             setloading(true)
-            const {data}=await axios.post('http://localhost:5000/api/users/login',{email,password})
+            // const {data}=await axios.post('http://localhost:5000/api/users/login',{email,password})
+            const {data}=await axios.post('https://pure-river-17146.herokuapp.com/api/users/login',{email,password})
             console.log(data.success)
             if(data.success)
                 setsuccess(true)
