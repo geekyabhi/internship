@@ -23,7 +23,8 @@ const Register = () => {
         else{
         try{
             setloading(true)
-            const {data}=await axios.post('http://localhost:5000/api/users',{name,email,password})
+            // const {data}=await axios.post('http://localhost:5000/api/users',{name,email,password})
+            const {data}=await axios.post('https://pure-river-17146.herokuapp.com/api/users',{name,email,password})
             setsuccess(data.success)
             success?localStorage.setItem('user',JSON.stringify(data.data)):localStorage.setItem('user','')
             setalert(data.message)
