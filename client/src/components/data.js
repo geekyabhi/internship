@@ -31,8 +31,8 @@ const Data = ({currentUser}) => {
         }
         try{
             setloading(true)
-            // const {data}=await axios.post('http://localhost:5000/api/data',{email,userName,mobileNumber,address},config)
-            const {data}=await axios.post('https://pure-river-17146.herokuapp.com/api/data',{email,userName,mobileNumber,address},config)
+            const {data}=await axios.post('http://localhost:5000/api/data',{email,userName,mobileNumber,address},config)
+            // const {data}=await axios.post('https://pure-river-17146.herokuapp.com/api/data',{email,userName,mobileNumber,address},config)
             
             setsuccess(data.success)
             setalert(data.message)
