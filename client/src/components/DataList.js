@@ -22,7 +22,9 @@ const DataList = ({currentUser,temp}) => {
             }
             try{
                 setloading(true)
-                const {data}=await axios.get('http://localhost:5000/api/data',config)
+                // const {data}=await axios.get('http://localhost:5000/api/data',config)
+                const {data}=await axios.get('https://pure-river-17146.herokuapp.com/api/data',config)
+                
                 setsuccess(data.success)
                 setdatalist(data.data)
                 setalert(data.message)
