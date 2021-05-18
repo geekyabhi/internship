@@ -1,36 +1,57 @@
 import React, { useState } from 'react'
-import { Col, Row,Button, Form, Alert} from 'react-bootstrap'
+import { Col, Row,Button, Form} from 'react-bootstrap'
 import { Link ,useHistory} from 'react-router-dom'
-
+import axios from 'axios'
+import Loader from './Loader'
+import NavBar from './NavBar'
 const Login = () => {
 
+    const history=useHistory()
     const [email, setemail] = useState(null)
     const [password, setpassword] = useState(null)
-    const [error, seterror] = useState(null)
+    const [alert, setalert] = useState(null)
     const [loading, setloading] = useState(null)
+    const [success, setsuccess] = useState(null)
+
 
     const submitHandler=async (e)=>{
         e.preventDefault()
         try{
             setloading(true)
-            const data=await axios.post('http://localhost:5000/api/users/login',{email,password})
-            data.data?localStorage.setItem('user',JSON.stringify(data.data)):localStorage.setItem('user','')
-            seterror(data.error)
+            const {data}=await axios.post('http://localhost:5000/api/users/login',{email,password})
+            console.log(data.success)
+            if(data.success)
+                setsuccess(true)
+            else
+                setsuccess(false)
+            data.success?localStorage.setItem('user',JSON.stringify(data.data)):localStorage.setItem('user','')
+            setalert(data.message)
             setloading(false)
-            history.push('/')
+            if(data.success)
+            {
+                console.log('Push')
+                history.push('/')
+            }
+
         }catch(e){
             console.log(e)
             setloading(false)
-            seterror('Error in login',e)
+            setalert('Some error occured')
         }
     }
 
     return (
+        <>
+        <NavBar></NavBar>
         <div className="wrapper">
-            <div>
-                <h1>Sign Up</h1>
-            </div>
-            <Form onSubmit={submitHandler}>
+            <div className="table">
+                <div>
+                    <h1>Login</h1>
+                </div>
+                {success===true?<div className="inform success">{alert}</div>:null}
+                {success===false?<div className="inform fail">{alert}</div>:null}
+                {loading && <Loader></Loader>}
+                <Form>
                     <Form.Group controlId='email' >
                         <Form.Control 
                             type='email' 
@@ -50,15 +71,17 @@ const Login = () => {
                             
                         </Form.Control>
                     </Form.Group>
-                    <Button type="submit" variant="primary" disabled={loading}>Sign In</Button>
                 </Form>
+                <Button type="submit" variant="primary" disabled={loading} onClick={submitHandler}>Sign In</Button>
                 <Row className="py-3">
                     <Col>
                         New Customer ?{' '} 
                         <Link to='/register'>Register</Link>
                     </Col>
                 </Row>
+            </div>
         </div>
+        </>
     )
 }
 

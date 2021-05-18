@@ -9,7 +9,15 @@ const addData=async(req,res)=>{
         res.status(201).json({success:true,message:'Data created',data:createdData})
     }catch(e){
         console.log(e)
-        res.status(400).json({success:false,message:'Failed to create',error:`${e}`})
+        let error=`${e}`.split(":")
+        let message
+        if(error[0]==='Error'){
+            message=error[1]
+        }else{
+            message='Failed to create'
+        }
+        res.json({success:false,message:message})
+        res.status(400)
     }
 }
 
@@ -20,7 +28,15 @@ const getAllData=async(req,res)=>{
         res.status(201).json({success:true,message:'Data fetched',data:data})
     }catch(e){
         console.log(e)
-        res.status(400).json({success:false,message:'Failed to load data',error:`${e}`})
+        let error=`${e}`.split(":")
+        let message
+        if(error[0]==='Error'){
+            message=error[1]
+        }else{
+            message='Failed to load data'
+        }
+        res.json({success:false,message:message})
+        res.status(400)
     }
 }
 
@@ -30,13 +46,21 @@ const getData=async(req,res)=>{
         const user=req.user._id
         const data=await Data.find({user,_id})
         if(!data){
-            res.status(400).json({success:false,message:'Data not found',error:`${e}`})
+            res.json({success:false,message:'Data not found',error:`${e}`})
             return
         }
         res.status(201).json({success:true,message:'Data Found',data:data})
     }catch(e){
         console.log(e)
-        res.status(400).json({success:false,message:'Failed to load data',error:`${e}`})
+        let error=`${e}`.split(":")
+        let message
+        if(error[0]==='Error'){
+            message=error[1]
+        }else{
+            message='Failed to load data'
+        }
+        res.json({success:false,message:message})
+        res.status(400)
     }
 }
 
@@ -46,7 +70,7 @@ const deleteData=async(req,res)=>{
         const user=req.user._id
         const data=await Data.findOne({user,_id})
         if(!data){
-            res.status(400).json({success:false,message:'Data not found',error:`${e}`})
+            res.json({success:false,message:'Data not found',error:`${e}`})
             return
         }else{
             await Data.findOneAndDelete({user,_id})
@@ -54,7 +78,15 @@ const deleteData=async(req,res)=>{
         res.status(201).json({success:true,message:'Data deleted',data:data})
     }catch(e){
         console.log(e)
-        res.status(400).json({success:false,message:'Failed to delete',error:`${e}`})
+        let error=`${e}`.split(":")
+        let message
+        if(error[0]==='Error'){
+            message=error[1]
+        }else{
+            message='Failed to delete'
+        }
+        res.json({success:false,message:message})
+        res.status(400)
     }
 }
 

@@ -5,5 +5,5 @@ const {addData,getAllData,getData,deleteData}=require('../controllers/dataContro
 router.route('/').post(protect,addData)
 router.route('/').get(protect,getAllData)
 router.route('/:id').get(protect,getData)
-router.route('/').delete(protect,deleteData)
+router.route('/:id').delete(protect,deleteData)
 module.exports=router

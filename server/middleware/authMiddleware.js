@@ -15,17 +15,23 @@ const protect = async (req, res, next) => {
                 next()
             }catch(error){
                 console.error(error)
-                res.status(401)
-                throw new Error('Not authorized, token failed')
+                throw new Error('Session Expired')
             }
         }
         if(!token){
-            res.status(401)
-            throw new Error('Not authorized, no token')
+            throw new Error('Not authorized')
         }
     }catch(e){
         console.log(e)
-        res.send({success:false,message:'Authorization Problem',error:`${e}`})
+        let error=`${e}`.split(":")
+        let message
+        if(error[0]==='Error'){
+            message=error[1]
+        }else{
+            message='Authorization Problem'
+        }
+        res.json({success:false,message:message})
+        res.status(401)
     }
 }
 
